@@ -3,6 +3,7 @@
 import { StyleSheet, View, TouchableOpacity, Alert } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { useWallet } from '@/context/WalletContext';
+import type { ThemedTextProps } from '@/components/themed-text';
 
 export default function HomeScreen() {
   const { address, balance, isConnected, isConnecting, connectWallet, disconnectWallet } = useWallet();
@@ -31,10 +32,19 @@ export default function HomeScreen() {
       {isConnected ? (
         <View style={styles.walletConnected}>
           <ThemedText style={styles.walletLabel}>✅ Connected</ThemedText>
-          <ThemedText style={styles.walletAddress}>{formatAddress(address!)}</ThemedText>
-          <ThemedText style={styles.walletBalance}>{balance} ETH</ThemedText>
-          <TouchableOpacity onPress={handleDisconnect} style={styles.disconnectBtn}>
-            <ThemedText style={styles.disconnectText}>Disconnect</ThemedText>
+          <ThemedText style={styles.walletAddress}>
+            {formatAddress(address!)}
+          </ThemedText>
+          <ThemedText style={styles.walletBalance}>
+            {balance} ETH
+          </ThemedText>
+          <TouchableOpacity 
+            onPress={handleDisconnect} 
+            style={styles.disconnectBtn}
+          >
+            <ThemedText style={styles.disconnectText}>
+              Disconnect
+            </ThemedText>
           </TouchableOpacity>
         </View>
       ) : (
@@ -42,6 +52,7 @@ export default function HomeScreen() {
           style={styles.connectButton} 
           onPress={handleConnectWallet}
           disabled={isConnecting}
+          activeOpacity={0.7}
         >
           <ThemedText style={styles.connectText}>
             {isConnecting ? '🔄 CONNECTING...' : '🔗 CONNECT WALLET'}
